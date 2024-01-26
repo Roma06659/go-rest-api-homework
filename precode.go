@@ -70,8 +70,6 @@ func postTasks(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tasks[task.ID] = task
-
-	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
 }
 
@@ -85,7 +83,7 @@ func getTask(w http.ResponseWriter, r *http.Request) {
 	}
 	resp, err := json.Marshal(task)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
@@ -99,7 +97,7 @@ func deleteTask(w http.ResponseWriter, r *http.Request) {
 
 	_, ok := tasks[id]
 	if !ok {
-		http.Error(w, "Задача не найдена", http.StatusNoContent)
+		http.Error(w, "Задача не найдена", http.StatusBadRequest)
 		return
 	}
 
