@@ -65,7 +65,7 @@ func postTasks(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err = json.Unmarshal(buf.Bytes(), &task); err != nil {
-		http.Error(w, "Элемент с таким id уже существует", http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
